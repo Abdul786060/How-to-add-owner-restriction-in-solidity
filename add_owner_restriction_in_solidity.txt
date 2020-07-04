@@ -1,0 +1,37 @@
+pragma solidity ^0.6.0;
+contract Add_Owner_Restriction{
+   uint256 public peopleCount=0;
+   address owner;
+   
+   //modifier owner start.
+   modifier onlyOwner() {
+       require(msg.sender==owner);
+       _;
+   }
+   //modifier owner end.
+    mapping (uint=>Person) public people;
+    struct Person {
+        uint id;
+        string firstName;
+        string lastName;
+    }
+    //constructor start.
+    constructor() public{
+        owner = msg.sender;
+    }
+    //constructor end.
+    //function add person start
+    function addPerson(string memory firstName, string memory lastName) public onlyOwner{
+        increamentalCount();
+        people[peopleCount]= Person(peopleCount,firstName,lastName);
+        
+        
+    }
+    // function add person end.
+    //internal icreamental function start.
+    function increamentalCount() internal {
+        peopleCount+=1;
+    }
+    // internal increamnetal function end.
+    
+}
